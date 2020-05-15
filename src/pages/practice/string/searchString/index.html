@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全局搜索字符</title>
+</head>
+<body>
+    <form id="text-search">
+        <textarea id="incoming" cols="150" rows="10"></textarea>
+        <p>Search pattern: <input id="pattern" placeholder="pattern"/></p>
+    </form>
+    <button id="search-submit">Search for pattern</button>
+    <div id="search-result"></div>
+
+    <hr>
+    <pre>
+        <code>
+            function $(id) {
+                return document.getElementById(id)
+            }
+            
+            $('search-submit').onclick = function() {
+                // 获取正则表达式
+                var pattern = $('pattern').value
+                var reg = new RegExp(pattern, 'g')
+            
+                // 获取被搜索的文本
+                var searchString = $('incoming').value
+            
+                var matchArray,
+                    resultString = '&lt;pre&gt;',
+                    first = 0,
+                    last = 0
+                // 找到每一个匹配
+                while((matchArray = reg.exec(searchString))) {
+                    last = matchArray.index
+                    // 获取所有匹配的字符串, 将其连接起来
+                    resultString += searchString.substring(first, last)
+                    resultString += '&lt;span class="found"&gt;'+ matchArray[0] +'&lt;/span&gt;'
+                    first = reg.lastIndex
+                }
+                
+                // 完成字符串
+                resultString += searchString.substring(first, searchString.length)
+                resultString += '&lt;/pre&gt;'
+            
+                $('search-result').innerHTML = resultString
+            }
+        </code>
+    </pre>
+</body>
+</html>

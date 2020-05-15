@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>提取字符串</title>
+</head>
+
+<body>
+    <h1>从字符串提取一个列表</h1>
+    <p>有一个字符串是由几个句子组成， 其中一个而句子包含一个项目列表。该列表以一个冒号开始(:), 以一个句点结束(.)。提取这个列表</p>
+    <dl>
+        <dt>提取之前:</dt>
+        <dd>This is one sentence. This is a sentence with a list of items: cherries, limes, oranges, apples. That was the list of items.</dd>
+    </dl>
+    <dl>
+        <dt>提取之后:</dt>
+        <dd>[cherries, limes, oranges, apples]</dd>
+    </dl>
+    <div class="code-area">
+        <dl>
+            <dt>方案一: indexOf</dt>
+            <dd>
+                <pre>
+                    <code>
+    var str = 'This is one sentence. This is a sentence with a list of items: cherries, limes, oranges, apples. That was the list of items.'
+    // 冒号: 在字符串中的下标
+    var start = str.indexOf(':')
+    // 冒号: 后第一个. 的下标
+    var end = str.indexOf('.', start + 1)
+    var result = str.substring(start + 1, end).split(',') // [" cherries", " limes", " oranges", " apples"]
+    // 可以看到获取到数据前后可能还存在空格，大多数情况下我们需要清理掉
+    result = result.map(str => str.trim())          
+</code>
+                </pre>
+            </dd>
+        </dl>
+        <dl>
+            <dt>方案二: 正则</dt>
+            <dd>
+                <pre>
+                    <code>
+    var str = 'This is one sentence. This is a sentence with a list of items: cherries, limes, oranges, apples. That was the list of items.'
+    // 正则相关知识点 https://blog.csdn.net/csm0912/article/details/81206848
+    var listStr = str.match(/(?《=:)[^\.]+(?!\.)/) // 《其实是小于号， 因为webpack plugnin loader无法解析故换成中文
+    var result = listStr.split(',') // [" cherries", " limes", " oranges", " apples"]
+    // 可以看到获取到数据前后可能还存在空格，大多数情况下我们需要清理掉
+    result = result.map(str => str.trim())          
+</code>
+                </pre>
+            </dd>
+        </dl>
+    </div>
+</body>
+
+</html>
