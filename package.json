@@ -56,7 +56,7 @@
   "dependencies": {
     "babel-loader": "^8.1.0",
     "core-js": "^2.6.11",
-    "highlight.js": "^10.0.1",
+    "highlight.js": "^10.4.1",
     "jquery": "^3.4.1"
   }
 }
